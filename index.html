@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Visual1 - Interactive Visualization</title>
+    <title>Homage to Vasarely's Alphabet Plastique</title>
     <style>
         body {
             margin: 0;
@@ -12,13 +12,13 @@
             background-color: black;
             font-family: Arial, sans-serif;
         }
-        
+
         canvas {
             display: block;
             width: 100%;
             height: 100%;
         }
-        
+
         #controls {
             position: fixed;
             top: 10px;
@@ -30,7 +30,7 @@
             z-index: 100;
             font-size: 14px;
         }
-        
+
         button {
             background: #444;
             color: white;
@@ -41,7 +41,7 @@
             margin-top: 10px;
             transition: background 0.3s;
         }
-        
+
         button:hover {
             background: #666;
         }
@@ -50,20 +50,20 @@
 <body>
 	<canvas id="myCanvas" width="1300" height="800"></canvas>
     <div id="controls">
-        <div>Visual1 - Interactive Visualization</div>
+        <div>Homage to Vasarely's Alphabet Plastique</div>
         <button id="startBtn" onclick="visualInstance.paint()">Repaint</button>
     </div>
-    
+
     <script src="visual1.js"></script>
-    
+
     <script>
         let visualInstance = new Visual1();
-        
+
         window.addEventListener('DOMContentLoaded', () => {
 			console.log("DOMContentLoaded");
 			visualInstance.paint();
         });
-                
+
     </script>
 </body>
 </html>

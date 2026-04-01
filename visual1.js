@@ -125,69 +125,32 @@ class Visual1 {
                     this.drawPolygon(this.context,
                         [i * w1 + w4, (i + 1) * w1 - w4, (i + 1) * w1 - w4, i * w1 + w4, i * w1 + w4],
                         [j * w1 + w4, j * w1 + w4, (j + 1) * w1 - w4, (j + 1) * w1 - w4, j * w1 + w4]);
-                    } else if (r1 > 0.3) {
-                        this.drawPolygon(this.context,
-                            [i * w1 + w2, i * w1 + w1, i * w1 + w2, i * w1, i * w1 + w2],
-                            [j * w1, j * w1 + w2, j * w1 + w1, j * w1 + w2, j * w1]);
-                        } else {
-                            this.context.beginPath();
-                            this.context.arc(i * w1 + w2, j * w1 + w2, (w1 - w4) / 2, 0, 2 * Math.PI);
-                            this.context.fill();
-                        }
-
-                        // Draw second shape (col3)
-                        this.context.fillStyle = this.hsbToRgb(this.col3, 1.0, 1.0);
-                        const r2 = Math.random();
-                        if (r2 > 0.6) {
-                            this.drawPolygon(this.context,
-                                [i * w1 + w3, (i + 1) * w1 - w3, (i + 1) * w1 - w3, i * w1 + w3, i * w1 + w3],
-                                [j * w1 + w3, j * w1 + w3, (j + 1) * w1 - w3, (j + 1) * w1 - w3, j * w1 + w3]);
-                            } else if (r2 > 0.3) {
-                                this.drawPolygon(this.context,
-                                    [i * w1 + w2, i * w1 + w1 - w3, i * w1 + w2, i * w1 + w3, i * w1 + w2],
-                                    [j * w1 + w3, j * w1 + w2, j * w1 + w1 - w3, j * w1 + w2, j * w1 + w3]);
-                                } else {
-                                    this.context.fillRect(i * w1 + w3, j * w1 + w3, w3, w3);
-                                }
-                            }
-                        }
-
-                        /*
-
-                        //this.context.drawImage(this.canvas, 0, 0, this.w, this.h, 0, 0, this.w, this.h);
-
-
-                        const centerX = this.w / 2;
-                        const centerY = 0;
-                        const horizon = 2;
-                        const distance = 2000;
-                        const scalingFactor = 3;
-                        const angleIncrement = 5;
-
-                        for (let x = 0; x < this.w; x++) {
-                        for (let y = 0; y < this.h; y++) {
-                        const { x: xPrime, y: yPrime } = this.vanishingPointPerspective(x, y, centerX, centerY, horizon, distance, scalingFactor, angleIncrement);
-                        this.context.drawImage(this.canvas, x, y, 1, 1, xPrime, yPrime, 1, 1);
-                        //this.context.drawImage(this.canvas, x, y, 1, 1, x, y, 1, 1);
-                    }
+                } else if (r1 > 0.3) {
+                    this.drawPolygon(this.context,
+                        [i * w1 + w2, i * w1 + w1, i * w1 + w2, i * w1, i * w1 + w2],
+                        [j * w1, j * w1 + w2, j * w1 + w1, j * w1 + w2, j * w1]);
+                } else {
+                    this.context.beginPath();
+                    this.context.arc(i * w1 + w2, j * w1 + w2, (w1 - w4) / 2, 0, 2 * Math.PI);
+                    this.context.fill();
                 }
 
-                console.log("paint done");
-
-
-                // Apply distortion effect
-                for (let i = 0; i < this.w; i += 2) {
-                for (let j = 0; j < this.h; j += 2) {
-                const is = Math.floor(i + i * this.xcoef * Math.cos(i * Math.PI / this.w));
-                const js = Math.floor(j + j * this.ycoef * Math.cos(j * Math.PI / this.w));
-
-                // Bounds checking
-                //if (is >= 0 && is + 1 < this.w && js >= 0 && js + 1 < this.h) {
-                this.context.drawImage(this.canvas, is, js, 2, 2, i, j, 2, 2);
-                //}
+                // Draw second shape (col3)
+                this.context.fillStyle = this.hsbToRgb(this.col3, 1.0, 1.0);
+                const r2 = Math.random();
+                if (r2 > 0.6) {
+                    this.drawPolygon(this.context,
+                        [i * w1 + w3, (i + 1) * w1 - w3, (i + 1) * w1 - w3, i * w1 + w3, i * w1 + w3],
+                        [j * w1 + w3, j * w1 + w3, (j + 1) * w1 - w3, (j + 1) * w1 - w3, j * w1 + w3]);
+                } else if (r2 > 0.3) {
+                    this.drawPolygon(this.context,
+                        [i * w1 + w2, i * w1 + w1 - w3, i * w1 + w2, i * w1 + w3, i * w1 + w2],
+                        [j * w1 + w3, j * w1 + w2, j * w1 + w1 - w3, j * w1 + w2, j * w1 + w3]);
+                } else {
+                    this.context.fillRect(i * w1 + w3, j * w1 + w3, w3, w3);
+                }
             }
         }
-        */
     }
 
     /**
@@ -299,18 +262,5 @@ class Visual1 {
             col3: ${this.col3}
             incval: ${this.incval}
         `);
-    }
-
-    vanishingPointPerspective(x, y, centerX, centerY, horizon, distance, scalingFactor, angleIncrement) {
-        const maxAngle = 0;
-        const theta = Math.atan2(y - centerY, x - centerX);
-        const distanceFromViewer = Math.sqrt(Math.pow(centerX - x, 2) + Math.pow(centerY - y, 2));
-        const distanceFromHorizon = Math.abs(y - horizon);
-        const angle = Math.min(maxAngle, angleIncrement * distanceFromViewer);
-        const scaling = distance / (distance + distanceFromViewer);
-        const z = distanceFromHorizon * scaling * scalingFactor;
-        const xPrime = centerX + z * Math.cos(theta + angle);
-        const yPrime = centerY + z * Math.sin(theta + angle);
-        return { x: xPrime, y: yPrime };
     }
 }
