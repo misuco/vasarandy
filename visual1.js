@@ -58,6 +58,17 @@ class Visual1 {
 
         // Handle window resize
         window.addEventListener('resize', () => this.handleResize());
+
+        // Create a link element to trigger the download
+        this.dlLink = document.createElement('a');
+        this.dlLink.download = "vasarandy.png";
+
+    }
+
+    download() {
+        // Programmatically click the link to trigger the browser's download
+        this.dlLink.href = this.canvas.toDataURL("image/png");
+        this.dlLink.click();
     }
 
     /**
