@@ -33,8 +33,8 @@ class Visual1 {
         this.xcoef = 0;
         this.ycoef = 0;
 
-        this.offscreenCanvas = null;
-        this.offscreenContext = null;
+        this.canvas = null;
+        this.context = null;
 
         this.init();
     }
@@ -47,16 +47,16 @@ class Visual1 {
         this.w = window.innerWidth;
         this.h = window.innerHeight;
 
-        this.offscreenCanvas = document.getElementById('myCanvas'); //document.createElement('canvas');
-        this.offscreenCanvas.width = this.w;
-        this.offscreenCanvas.height = this.h;
-        this.offscreenCanvas.style.display = 'block';
-        this.offscreenCanvas.style.margin = '0';
-        this.offscreenCanvas.style.padding = '0';
-        this.offscreenContext = this.offscreenCanvas.getContext('2d');
+        this.canvas = document.getElementById('myCanvas'); //document.createElement('canvas');
+        this.canvas.width = this.w;
+        this.canvas.height = this.h;
+        this.canvas.style.display = 'block';
+        this.canvas.style.margin = '0';
+        this.canvas.style.padding = '0';
+        this.context = this.canvas.getContext('2d');
 
-        this.offscreenContext.fillStyle = 'rgb(255,0,0)';
-        this.offscreenContext.fillRect(0, 0, this.w, this.h);
+        this.context.fillStyle = 'rgb(255,0,0)';
+        this.context.fillRect(0, 0, this.w, this.h);
 
         // Handle window resize
         window.addEventListener('resize', () => this.handleResize());
@@ -68,8 +68,8 @@ class Visual1 {
     handleResize() {
         this.w = window.innerWidth;
         this.h = window.innerHeight;
-        this.offscreenCanvas.width = this.w;
-        this.offscreenCanvas.height = this.h;
+        this.canvas.width = this.w;
+        this.canvas.height = this.h;
     }
 
     /**
@@ -80,8 +80,8 @@ class Visual1 {
         console.log("paint n:"+this.n);
 
         // Clear offscreen canvas
-        this.offscreenContext.fillStyle = 'rgb(0,0,0)';
-        this.offscreenContext.fillRect(0, 0, this.w, this.h);
+        this.context.fillStyle = 'rgb(0,0,0)';
+        this.context.fillRect(0, 0, this.w, this.h);
 
         let w1 = Math.floor(this.w / this.n);
         let nw = this.n;
@@ -113,46 +113,46 @@ class Visual1 {
                 if (this.col3 < this.colmin) this.col3 = this.colmax;
 
                 // Draw background rectangle
-                this.offscreenContext.fillStyle = this.hsbToRgb(this.col1, 1.0, 1.0);
-                this.offscreenContext.fillRect(i * w1, j * w1, w1, w1);
+                this.context.fillStyle = this.hsbToRgb(this.col1, 1.0, 1.0);
+                this.context.fillRect(i * w1, j * w1, w1, w1);
 
                 // Draw first shape (col2)
-                this.offscreenContext.fillStyle = this.hsbToRgb(this.col2, 1.0, 1.0);
+                this.context.fillStyle = this.hsbToRgb(this.col2, 1.0, 1.0);
                 const r1 = Math.random();
                 if (r1 > 0.6) {
-                    this.drawPolygon(this.offscreenContext,
+                    this.drawPolygon(this.context,
                         [i * w1 + w4, (i + 1) * w1 - w4, (i + 1) * w1 - w4, i * w1 + w4, i * w1 + w4],
                         [j * w1 + w4, j * w1 + w4, (j + 1) * w1 - w4, (j + 1) * w1 - w4, j * w1 + w4]);
                     } else if (r1 > 0.3) {
-                        this.drawPolygon(this.offscreenContext,
+                        this.drawPolygon(this.context,
                             [i * w1 + w2, i * w1 + w1, i * w1 + w2, i * w1, i * w1 + w2],
                             [j * w1, j * w1 + w2, j * w1 + w1, j * w1 + w2, j * w1]);
                         } else {
-                            this.offscreenContext.beginPath();
-                            this.offscreenContext.arc(i * w1 + w2, j * w1 + w2, (w1 - w4) / 2, 0, 2 * Math.PI);
-                            this.offscreenContext.fill();
+                            this.context.beginPath();
+                            this.context.arc(i * w1 + w2, j * w1 + w2, (w1 - w4) / 2, 0, 2 * Math.PI);
+                            this.context.fill();
                         }
 
                         // Draw second shape (col3)
-                        this.offscreenContext.fillStyle = this.hsbToRgb(this.col3, 1.0, 1.0);
+                        this.context.fillStyle = this.hsbToRgb(this.col3, 1.0, 1.0);
                         const r2 = Math.random();
                         if (r2 > 0.6) {
-                            this.drawPolygon(this.offscreenContext,
+                            this.drawPolygon(this.context,
                                 [i * w1 + w3, (i + 1) * w1 - w3, (i + 1) * w1 - w3, i * w1 + w3, i * w1 + w3],
                                 [j * w1 + w3, j * w1 + w3, (j + 1) * w1 - w3, (j + 1) * w1 - w3, j * w1 + w3]);
                             } else if (r2 > 0.3) {
-                                this.drawPolygon(this.offscreenContext,
+                                this.drawPolygon(this.context,
                                     [i * w1 + w2, i * w1 + w1 - w3, i * w1 + w2, i * w1 + w3, i * w1 + w2],
                                     [j * w1 + w3, j * w1 + w2, j * w1 + w1 - w3, j * w1 + w2, j * w1 + w3]);
                                 } else {
-                                    this.offscreenContext.fillRect(i * w1 + w3, j * w1 + w3, w3, w3);
+                                    this.context.fillRect(i * w1 + w3, j * w1 + w3, w3, w3);
                                 }
                             }
                         }
 
                         /*
 
-                        //this.context.drawImage(this.offscreenCanvas, 0, 0, this.w, this.h, 0, 0, this.w, this.h);
+                        //this.context.drawImage(this.canvas, 0, 0, this.w, this.h, 0, 0, this.w, this.h);
 
 
                         const centerX = this.w / 2;
@@ -165,8 +165,8 @@ class Visual1 {
                         for (let x = 0; x < this.w; x++) {
                         for (let y = 0; y < this.h; y++) {
                         const { x: xPrime, y: yPrime } = this.vanishingPointPerspective(x, y, centerX, centerY, horizon, distance, scalingFactor, angleIncrement);
-                        this.context.drawImage(this.offscreenCanvas, x, y, 1, 1, xPrime, yPrime, 1, 1);
-                        //this.context.drawImage(this.offscreenCanvas, x, y, 1, 1, x, y, 1, 1);
+                        this.context.drawImage(this.canvas, x, y, 1, 1, xPrime, yPrime, 1, 1);
+                        //this.context.drawImage(this.canvas, x, y, 1, 1, x, y, 1, 1);
                     }
                 }
 
@@ -181,7 +181,7 @@ class Visual1 {
 
                 // Bounds checking
                 //if (is >= 0 && is + 1 < this.w && js >= 0 && js + 1 < this.h) {
-                this.context.drawImage(this.offscreenCanvas, is, js, 2, 2, i, j, 2, 2);
+                this.context.drawImage(this.canvas, is, js, 2, 2, i, j, 2, 2);
                 //}
             }
         }
