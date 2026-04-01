@@ -83,10 +83,18 @@ class Visual1 {
         this.offscreenContext.fillStyle = 'rgb(0,0,0)';
         this.offscreenContext.fillRect(0, 0, this.w, this.h);
 
+        let w1 = Math.floor(this.w / this.n);
+        let nw = this.n;
+        let nh = Math.floor(this.h/w1);
+        if(this.w>this.h) {
+            w1 = Math.floor(this.h / this.n);
+            nh = this.n;
+            nw = Math.floor(this.w/w1);
+        }
+
         // Draw grid
-        for (let i = 0; i < this.n; i++) {
-            for (let j = 0; j < this.n; j++) {
-                const w1 = Math.floor(this.w / this.n);
+        for (let i = 0; i < nw; i++) {
+            for (let j = 0; j < nh; j++) {
                 const w2 = Math.floor(w1 / 2);
                 const w3 = Math.floor(w1 / 3);
                 const w4 = Math.floor(w1 / 4);
