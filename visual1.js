@@ -30,8 +30,6 @@ class Visual1 {
         this.incval = 0;
         this.colmax = 0;
         this.colmin = 0;
-        this.xcoef = 0;
-        this.ycoef = 0;
 
         this.canvas = null;
         this.context = null;
@@ -77,7 +75,7 @@ class Visual1 {
     */
     paint() {
         this.randomize();
-        console.log("paint n:"+this.n);
+        console.log("paint(): tiles per row: "+this.n);
 
         // Clear offscreen canvas
         this.context.fillStyle = 'rgb(0,0,0)';
@@ -93,14 +91,17 @@ class Visual1 {
             nw = Math.floor(this.w/w1);
         }
 
+        // calculate tile size
+        const w2 = Math.floor(w1 / 2);
+        const w3 = Math.floor(w1 / 3);
+        const w4 = Math.floor(w1 / 4);
+        const w8 = Math.floor(w1 / 8);
+
         // Draw grid
         for (let i = 0; i < nw; i++) {
             for (let j = 0; j < nh; j++) {
-                const w2 = Math.floor(w1 / 2);
-                const w3 = Math.floor(w1 / 3);
-                const w4 = Math.floor(w1 / 4);
-                const w8 = Math.floor(w1 / 8);
 
+                // Advance color
                 this.col1 += this.incval;
                 this.col2 -= this.incval;
                 this.col3 += this.incval;
@@ -267,15 +268,37 @@ class Visual1 {
     */
     randomize() {
         console.log("Visual1: randomize()");
-        this.col1 = Math.random();
-        this.col2 = Math.random();
-        this.col3 = Math.random();
-        this.n = Math.round(Math.random() * 20);
-        this.incval = Math.random() / 100;
-        this.colmax = Math.random();
+        this.n = 1 + Math.round(Math.random() * 20);
+
+        // calculate color range
         this.colmin = Math.random();
-        this.xcoef = Math.random();
-        this.ycoef = Math.random();
+        this.colmax = Math.min(this.colmin+Math.random(),1.0);
+
+        // make sure there is a minimal color difference
+        let colDiffMin = 0.2;
+        let colDiff = this.colmax-this.colmin;
+        if(colDiff<colDiffMin) {
+            if(this.colmin>colDiffMin) {
+                this.colmin=this.colmax-colDiffMin;
+            } else {
+                this.colmax=this.colmin+colDiffMin;
+            }
+        }
+
+        this.col1 = this.colmin;
+        this.col2 = this.colmax;
+        this.col3 = this.colmin + (this.colmax - this.colmin) * Math.random();
+
+        this.incval = Math.random() / 100;
+        console.log(`
+            n: ${this.n}
+            colmin: ${this.colmin}
+            colmax: ${this.colmax}
+            col1: ${this.col1}
+            col2: ${this.col2}
+            col3: ${this.col3}
+            incval: ${this.incval}
+        `);
     }
 
     vanishingPointPerspective(x, y, centerX, centerY, horizon, distance, scalingFactor, angleIncrement) {
