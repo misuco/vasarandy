@@ -83,6 +83,7 @@ class Visual1 {
         this.context.fillStyle = 'rgb(0,0,0)';
         this.context.fillRect(0, 0, this.w, this.h);
 
+        // adapt to screen orientation
         let w1 = Math.floor(this.w / this.n);
         let nw = this.n;
         let nh = Math.floor(this.h/w1);
